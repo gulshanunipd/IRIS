@@ -418,7 +418,7 @@ ul {
 }
 
 .bg-light .section-title {
-    color: var(--clr-bg-dark);
+    color: var(--clr-text-main);
 }
 
 /* Timeline */
@@ -538,7 +538,7 @@ ul {
 .info-card h3 {
     margin-bottom: 1rem;
     font-size: 1.3rem;
-    color: var(--clr-bg-dark);
+    color: var(--clr-text-main);
 }
 
 .info-card p {
