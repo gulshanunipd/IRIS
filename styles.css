@@ -184,7 +184,7 @@ ul {
     font-size: 1.25rem;
     font-weight: 800;
     letter-spacing: 1px;
-    background: linear-gradient(to right, var(--clr-bg-card), var(--clr-primary));
+    background: linear-gradient(to right, var(--clr-text-main), var(--clr-primary));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -194,7 +194,7 @@ ul {
     display: none;
     background: none;
     border: none;
-    color: white;
+    color: var(--clr-text-main);
     font-size: 1.5rem;
     cursor: pointer;
 }
