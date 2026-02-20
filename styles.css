@@ -113,13 +113,13 @@ ul {
 
 .btn-secondary {
     background: transparent;
-    color: white;
+    color: var(--clr-text-main);
     border: 1px solid var(--clr-border);
     backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
     border-color: var(--clr-primary);
 }
 
