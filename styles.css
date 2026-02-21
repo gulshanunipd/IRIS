@@ -235,6 +235,77 @@ ul {
     width: 100%;
 }
 
+/* Dropdown */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    min-width: 200px;
+    box-shadow: var(--shadow-sm);
+    border: var(--glass-border);
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 0.5rem 0;
+    margin-top: 10px;
+    /* gap for the hover bridge */
+}
+
+/* Invisible bridge so hover doesn't break */
+.nav-dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 15px;
+}
+
+.nav-dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.2s ease;
+}
+
+.dropdown-content a {
+    padding: 0.75rem 1.5rem;
+    color: var(--clr-text-main);
+    text-decoration: none;
+    display: block;
+    opacity: 0.8;
+}
+
+.dropdown-content a:hover {
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--clr-primary);
+    opacity: 1;
+}
+
+.dropdown-content a::after {
+    display: none;
+    /* remove underline from dropdown items */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .btn-login,
 .btn-search {
     background: rgba(0, 0, 0, 0.05);

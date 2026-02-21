@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership - ISRS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--clr-primary), var(--clr-secondary));
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo {
+            height: 60px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            background: white;
+            padding: 5px;
+        }
+
+        .auth-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: var(--clr-text-muted);
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--clr-text-main);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: var(--clr-text-main);
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 15px rgba(64, 149, 92, 0.1);
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 2.3rem;
+            color: var(--clr-text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .form-input:focus~.input-icon,
+        .form-input:not(:placeholder-shown)~.input-icon {
+            color: var(--clr-primary);
+        }
+
+        .auth-btn {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.9rem;
+            font-size: 1.05rem;
+        }
+
+        .auth-footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--clr-text-muted);
+        }
+
+        .auth-link {
+            color: var(--clr-primary);
+            font-weight: 600;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        #auth-alert {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .content-block {
+            margin-top: 1.5rem;
+            text-align: left;
+            color: var(--clr-text-main);
+            line-height: 1.6;
+        }
+
+        .content-block ul {
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+            list-style-type: disc;
+        }
+
+        .content-block li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="hero-bg-elements" style="position: fixed;">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <!-- Navigation (Minimal for Auth Pages) -->
+    <a href="index.html" class="btn btn-secondary" style="position: absolute; top: 2rem; left: 2rem; z-index: 10;">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
+
+    <div class="auth-container" style="max-width: 800px; margin: 0 auto; padding-top: 6rem;">
+        <div class="auth-card fade-in-up visible" style="max-width: 100%;">
+            <div class="auth-header">
+                <img src="assets/logo.jpg" alt="ISRS Logo" class="auth-logo">
+                <h1 class="auth-title">ISRS Membership</h1>
+                <p class="auth-subtitle">Join a global community of esteemed researchers.</p>
+            </div>
+
+            <div class="content-block">
+                <p>Welcome to the Innovative Science Research Society Membership page. By becoming a member, you gain
+                    exclusive access to a network of professionals dedicated to advancing scientific discovery and
+                    fostering global collaboration.</p>
+
+                <h3 style="margin-top: 1.5rem; color: var(--clr-primary);">Membership Benefits Include:</h3>
+                <ul>
+                    <li>Discounted registration rates for the Annual ISRS Fall Meeting & Exhibit.</li>
+                    <li>Full access to all ISRS publications, journals, and breaking news articles.</li>
+                    <li>Opportunities to participate in specialized symposia and topical clusters.</li>
+                    <li>Voting rights in ISRS Governance and leadership elections.</li>
+                    <li>Exclusive networking events and webinars focused on abstract writing and poster success.</li>
+                </ul>
+
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <a href="signup.html" class="btn btn-primary">Join ISRS Today <i class="fa-solid fa-arrow-right"
+                            style="margin-left: 5px;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>

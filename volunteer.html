@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Central - ISRS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--clr-primary), var(--clr-secondary));
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo {
+            height: 60px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            background: white;
+            padding: 5px;
+        }
+
+        .auth-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: var(--clr-text-muted);
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--clr-text-main);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: var(--clr-text-main);
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 15px rgba(64, 149, 92, 0.1);
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 2.3rem;
+            color: var(--clr-text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .form-input:focus~.input-icon,
+        .form-input:not(:placeholder-shown)~.input-icon {
+            color: var(--clr-primary);
+        }
+
+        .auth-btn {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.9rem;
+            font-size: 1.05rem;
+        }
+
+        .auth-footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--clr-text-muted);
+        }
+
+        .auth-link {
+            color: var(--clr-primary);
+            font-weight: 600;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        #auth-alert {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .content-block {
+            margin-top: 1.5rem;
+            text-align: left;
+            color: var(--clr-text-main);
+            line-height: 1.6;
+        }
+
+        .content-block p {
+            margin-bottom: 1rem;
+        }
+
+        .volunteer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .volunteer-card {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .volunteer-card i {
+            font-size: 2rem;
+            color: var(--clr-primary);
+            margin-bottom: 1rem;
+        }
+
+        @media(max-width: 600px) {
+            .volunteer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="hero-bg-elements" style="position: fixed;">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <!-- Navigation (Minimal for Auth Pages) -->
+    <a href="index.html" class="btn btn-secondary" style="position: absolute; top: 2rem; left: 2rem; z-index: 10;">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
+
+    <div class="auth-container" style="max-width: 900px; margin: 0 auto; padding-top: 6rem;">
+        <div class="auth-card fade-in-up visible" style="max-width: 100%;">
+            <div class="auth-header">
+                <img src="assets/logo.jpg" alt="ISRS Logo" class="auth-logo">
+                <h1 class="auth-title">Volunteer Central</h1>
+                <p class="auth-subtitle">Get involved. Make an impact.</p>
+            </div>
+
+            <div class="content-block">
+                <p>Volunteering with the Innovative Science Research Society is a rewarding way to give back to the
+                    scientific community, develop leadership skills, and expand your professional network. Whether you
+                    have a few hours a month or are looking for a long-term commitment, we have a role for you.</p>
+
+                <div class="volunteer-grid">
+                    <div class="volunteer-card">
+                        <i class="fa-solid fa-users-viewfinder"></i>
+                        <h4>Meeting Organizers</h4>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--clr-text-muted);">Help shape our
+                            annual symposia by reviewing abstracts and planning sessions.</p>
+                    </div>
+                    <div class="volunteer-card">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                        <h4>Journal Reviewers</h4>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--clr-text-muted);">Utilize your
+                            expertise to peer-review cutting-edge research publications.</p>
+                    </div>
+                    <div class="volunteer-card">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <h4>Mentorship Program</h4>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--clr-text-muted);">Guide the next
+                            generation of researchers and students entering the field.</p>
+                    </div>
+                    <div class="volunteer-card">
+                        <i class="fa-solid fa-bullhorn"></i>
+                        <h4>Outreach Ambassadors</h4>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--clr-text-muted);">Represent ISRS
+                            at universities and local R&D institutions worldwide.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="mailto:volunteer@isrs.org" class="btn btn-primary">Apply to Volunteer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>
