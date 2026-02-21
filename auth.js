@@ -138,6 +138,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Remove the logout onclick handler so the link works normally
                 loginBtn.onclick = null;
             }
+
+            // --- Log Page View Activity ---
+            // Don't log on login/signup pages or dashboard where we already do explicit logging
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const excludedPages = ['login.html', 'signup.html', 'dashboard.html'];
+
+            // Added check to prevent endless logging on the same page reload unless necessary,
+            // but for simplicity, we log the page view on load if not excluded.
+            if (!excludedPages.includes(currentPage)) {
+                // Determine page name for readable log
+                let pageName = currentPage.replace('.html', '');
+                pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+                if (pageName === 'Index') pageName = 'Home';
+
+                fetch(`${API_BASE_URL}/user/activity`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ action: `User visited ${pageName} page` })
+                }).catch(err => console.error('Failed to log page view:', err));
+            }
+
         } catch (e) {
             console.error("Error parsing user data", e);
         }
