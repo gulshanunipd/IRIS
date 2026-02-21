@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     showAlert('Login successful! Redirecting...', 'success');
 
-                    // Redirect to Home page after a short delay
+                    // Redirect to Dashboard page after a short delay
                     setTimeout(() => {
-                        window.location.href = 'index.html';
+                        window.location.href = 'dashboard.html';
                     }, 1500);
                 } else {
                     // Error from server
@@ -133,14 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update UI for logged in state
             const loginBtn = document.querySelector('.btn-login');
             if (loginBtn) {
-                loginBtn.innerHTML = `<i class="fa-solid fa-user-circle"></i> ${user.name.split(' ')[0]} (Logout)`;
-                // Change link/action to logout
-                loginBtn.onclick = (e) => {
-                    e.preventDefault();
-                    localStorage.removeItem('isrs_token');
-                    localStorage.removeItem('isrs_user');
-                    window.location.reload();
-                };
+                loginBtn.innerHTML = `<i class="fa-solid fa-user-circle"></i> Dashboard`;
+                loginBtn.href = 'dashboard.html';
+                // Remove the logout onclick handler so the link works normally
+                loginBtn.onclick = null;
             }
         } catch (e) {
             console.error("Error parsing user data", e);
