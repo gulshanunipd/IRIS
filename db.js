@@ -20,9 +20,26 @@ const db = new sqlite3.Database(dbPath, (err) => {
             )
         `, (err) => {
             if (err) {
-                console.error('Error creating table', err.message);
+                console.error('Error creating users table', err.message);
             } else {
                 console.log('Users table created or already exists.');
+
+                // Create activity_log table
+                db.run(`
+                    CREATE TABLE IF NOT EXISTS activity_log (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        user_id INTEGER NOT NULL,
+                        action TEXT NOT NULL,
+                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        FOREIGN KEY (user_id) REFERENCES users (id)
+                    )
+                `, (err) => {
+                    if (err) {
+                        console.error('Error creating activity_log table', err.message);
+                    } else {
+                        console.log('Activity log table created or already exists.');
+                    }
+                });
             }
         });
     }
