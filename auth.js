@@ -75,6 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
+            const membershipType = document.getElementById('membership-type').value;
+            const profileImageUrl = document.getElementById('profile-image').value;
             const submitBtn = document.getElementById('signup-submit-btn');
 
             // Client-side validation
@@ -97,7 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ name, email, password })
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password,
+                        membership_type: membershipType,
+                        profile_image_url: profileImageUrl
+                    })
                 });
 
                 const data = await response.json();

@@ -63,7 +63,7 @@ const authenticateToken = (req, res, next) => {
 // 1. Sign Up Route
 app.post('/api/register', async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, membership_type, profile_image_url } = req.body;
 
         // Basic validation
         if (!name || !email || !password) {
@@ -82,8 +82,8 @@ app.post('/api/register', async (req, res) => {
 
         // Insert into database
         const newUserId = await dbRun(
-            'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-            [name, email, hashedPassword]
+            'INSERT INTO users (name, email, password, membership_type, profile_image_url) VALUES (?, ?, ?, ?, ?)',
+            [name, email, hashedPassword, membership_type || 'User', profile_image_url || '']
         );
 
         // Record User Action
@@ -123,7 +123,7 @@ app.post('/api/login', async (req, res) => {
 
         // Generate JWT Token
         const token = jwt.sign(
-            { id: user.id, email: user.email, name: user.name },
+            { id: user.id, email: user.email, name: user.name, role: user.role },
             JWT_SECRET,
             { expiresIn: '2h' }
         );
@@ -190,6 +190,47 @@ app.post('/api/user/activity', authenticateToken, async (req, res) => {
     } catch (error) {
         console.error('Activity Logging Error:', error);
         res.status(500).json({ error: 'Internal server error logging activity' });
+    }
+});
+
+// Middleware for Admin only routes
+const authenticateAdmin = (req, res, next) => {
+    authenticateToken(req, res, () => {
+        if (req.user && req.user.role === 'admin') {
+            next();
+        } else {
+            res.status(403).json({ error: 'Admin access required.' });
+        }
+    });
+};
+
+// 5. Admin Dashboard Data (Protected Admin Route)
+app.get('/api/admin/users', authenticateAdmin, async (req, res) => {
+    try {
+        const dbAll = (query, params) => {
+            return new Promise((resolve, reject) => {
+                db.all(query, params, (err, rows) => {
+                    if (err) reject(err);
+                    resolve(rows);
+                });
+            });
+        };
+
+        const users = await dbAll('SELECT id, name, email, role, membership_type, profile_image_url, created_at FROM users ORDER BY created_at DESC', []);
+
+        // Fetch last 50 system-wide activities with user names
+        const recentActivity = await dbAll(`
+            SELECT a.id, a.action, a.timestamp, u.name as user_name, u.email as user_email
+            FROM activity_log a
+            JOIN users u ON a.user_id = u.id
+            ORDER BY a.timestamp DESC 
+            LIMIT 50
+        `, []);
+
+        res.status(200).json({ users, recentActivity });
+    } catch (error) {
+        console.error('Admin API Error:', error);
+        res.status(500).json({ error: 'Internal server error fetching admin data' });
     }
 });
 

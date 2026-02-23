@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ISRS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+            min-height: calc(100vh - var(--nav-height));
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--clr-border);
+            padding-bottom: 1rem;
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            color: var(--clr-text-main);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .admin-card {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .card-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--clr-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Users Table */
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .user-table th,
+        .user-table td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-table th {
+            color: var(--clr-text-muted);
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.02);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .user-table td {
+            color: var(--clr-text-main);
+        }
+
+        .user-badge {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .user-badge.admin {
+            background: var(--clr-primary);
+            color: white;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feed-item {
+            padding: 1rem;
+            border-left: 3px solid var(--clr-primary);
+            background: rgba(0, 0, 0, 0.02);
+            margin-bottom: 0.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .feed-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+        }
+
+        .feed-user {
+            font-weight: 600;
+            color: var(--clr-text-main);
+        }
+
+        .feed-time {
+            color: var(--clr-text-muted);
+        }
+
+        .feed-action {
+            color: var(--clr-text-main);
+        }
+
+        #loading-indicator {
+            text-align: center;
+            padding: 3rem;
+            color: var(--clr-primary);
+            font-size: 1.5rem;
+        }
+
+        @media(max-width: 900px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.jpg" alt="ISRS Logo" class="brand-logo">
+                <div class="brand-text">
+                    <span class="brand-title">ISRS</span>
+                </div>
+            </a>
+            <nav class="nav-links" id="nav-links">
+                <a href="dashboard.html" class="btn-secondary"
+                    style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;"><i
+                        class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header fade-in-up visible">
+            <h1 class="admin-title"><i class="fa-solid fa-shield-halved" style="color: var(--clr-primary);"></i> System
+                Administration</h1>
+        </div>
+
+        <div id="loading-indicator">
+            <i class="fa-solid fa-spinner fa-spin"></i> Retrieving system data...
+        </div>
+
+        <div class="admin-grid fade-in-up visible" id="admin-content" style="display: none;">
+            <!-- Users Column -->
+            <div class="admin-card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-users"></i> Registered Users</span>
+                    <span id="user-count" class="user-badge"
+                        style="background: var(--clr-primary); color: white;">0</span>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Membership</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Global Activity Column -->
+            <div class="admin-card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-satellite-dish"></i> Global Activity Feed</span>
+                </div>
+                <ul class="activity-feed" id="activity-feed">
+                    <!-- Populated by JS -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

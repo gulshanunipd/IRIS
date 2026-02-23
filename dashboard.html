@@ -168,12 +168,27 @@
                 <div class="card-header">
                     <i class="fa-regular fa-id-card"></i> Profile Details
                 </div>
+
+                <div id="profile-image-container" style="text-align: center; margin-bottom: 1.5rem; display: none;">
+                    <img id="profile-avatar" src="" alt="Profile Avatar"
+                        style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--clr-primary); box-shadow: var(--shadow-sm);">
+                </div>
+
                 <div class="profile-info">
-                    <p><strong>Name:</strong> <span id="profile-name"></span></p>
+                    <p><strong>Name:</strong> <span id="profile-name"></span> <span id="admin-badge"
+                            style="display:none; background: var(--clr-primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; margin-left: 5px; vertical-align: middle;">ADMIN</span>
+                    </p>
                     <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                    <p><strong>Type:</strong> <span id="profile-membership"></span></p>
                     <p><strong>Joined:</strong> <span id="profile-joined"></span></p>
                     <p><strong>Status:</strong> <span style="color: var(--clr-primary); font-weight: 600;"><i
                                 class="fa-solid fa-circle-check"></i> Active Member</span></p>
+
+                    <div id="admin-panel-btn-container"
+                        style="display: none; margin-top: 2rem; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 1.5rem; text-align: center;">
+                        <a href="admin.html" class="btn btn-primary" style="width: 100%;"><i
+                                class="fa-solid fa-shield-halved"></i> Access Admin Panel</a>
+                    </div>
                 </div>
             </div>
 
