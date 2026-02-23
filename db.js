@@ -12,7 +12,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
         // Create the users table if it doesn't exist
         db.run(`
             CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                membership_id TEXT PRIMARY KEY,
                 name TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL,
                 password TEXT NOT NULL,
@@ -36,13 +36,14 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 const bcrypt = require('bcrypt');
                 const adminEmail = 'admin@isrs.org';
                 const adminPassword = 'Admin123!';
+                const adminMembershipId = '00000001';
 
-                db.get('SELECT id FROM users WHERE email = ?', [adminEmail], async (err, row) => {
+                db.get('SELECT membership_id FROM users WHERE email = ?', [adminEmail], async (err, row) => {
                     if (!err && !row) {
                         try {
                             const hashedPwd = await bcrypt.hash(adminPassword, 10);
-                            db.run(`INSERT INTO users (name, email, password, role, membership_type) VALUES (?, ?, ?, ?, ?)`,
-                                ['System Admin', adminEmail, hashedPwd, 'admin', 'ISRS Fellow']);
+                            db.run(`INSERT INTO users (membership_id, name, email, password, role, membership_type) VALUES (?, ?, ?, ?, ?, ?)`,
+                                [adminMembershipId, 'System Admin', adminEmail, hashedPwd, 'admin', 'ISRS Fellow']);
                             console.log('Default Admin account seeded successfully.');
                         } catch (e) {
                             console.error('Failed to seed admin', e);
@@ -54,10 +55,10 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 db.run(`
                     CREATE TABLE IF NOT EXISTS activity_log (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        user_id INTEGER NOT NULL,
+                        user_id TEXT NOT NULL,
                         action TEXT NOT NULL,
                         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-                        FOREIGN KEY (user_id) REFERENCES users (id)
+                        FOREIGN KEY (user_id) REFERENCES users (membership_id)
                     )
                 `, (err) => {
                     if (err) {

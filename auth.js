@@ -76,8 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
             const membershipType = document.getElementById('membership-type').value;
-            const profileImageUrl = document.getElementById('profile-image').value;
+            const profileImageInput = document.getElementById('profile-image');
             const submitBtn = document.getElementById('signup-submit-btn');
+
+            let profileImageUrl = '';
 
             // Client-side validation
             if (password !== confirmPassword) {
@@ -88,6 +90,31 @@ document.addEventListener('DOMContentLoaded', () => {
             if (password.length < 6) {
                 showAlert('Password must be at least 6 characters long.');
                 return;
+            }
+
+            // File Size Validation
+            if (profileImageInput.files && profileImageInput.files.length > 0) {
+                const file = profileImageInput.files[0];
+                if (file.size > 200 * 1024) {
+                    showAlert('Profile image must be under 200 KB.');
+                    return;
+                }
+
+                // Convert to Base64
+                const toBase64 = file => new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+
+                try {
+                    profileImageUrl = await toBase64(file);
+                } catch (e) {
+                    console.error('Image Read Error:', e);
+                    showAlert('Failed to read image file.');
+                    return;
+                }
             }
 
             submitBtn.disabled = true;
@@ -111,12 +138,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    showAlert('Registration successful! Please sign in.', 'success');
+                    showAlert(`Registration successful! Your Membership ID is: <strong>${data.userId}</strong>. Please sign in.`, 'success');
 
-                    // Redirect to Login page after a short delay
+                    // Form reset to clear file buffer
+                    signupForm.reset();
+
+                    // Redirect to Login page after a slightly longer delay to read the ID
                     setTimeout(() => {
                         window.location.href = 'login.html';
-                    }, 2000);
+                    }, 4000);
                 } else {
                     showAlert(data.error || 'Registration failed. Please try again.');
                 }
