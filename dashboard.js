@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             greeting.textContent = firstName + '!';
 
             profileName.textContent = user.name;
+            document.getElementById('profile-id').textContent = user.id;
             profileEmail.textContent = user.email;
             profileMembership.textContent = user.membership_type || 'ISRS User';
 

@@ -60,6 +60,18 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
+// Function to generate unique 8-digit membership ID
+const generateMembershipId = async () => {
+    let id;
+    let exists = true;
+    while (exists) {
+        id = Math.floor(10000000 + Math.random() * 90000000).toString();
+        const user = await dbGet('SELECT membership_id FROM users WHERE membership_id = ?', [id]);
+        if (!user) exists = false;
+    }
+    return id;
+};
+
 // 1. Sign Up Route
 app.post('/api/register', async (req, res) => {
     try {
@@ -81,17 +93,18 @@ app.post('/api/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         // Insert into database
-        const newUserId = await dbRun(
-            'INSERT INTO users (name, email, password, membership_type, profile_image_url) VALUES (?, ?, ?, ?, ?)',
-            [name, email, hashedPassword, membership_type || 'User', profile_image_url || '']
+        const membershipId = await generateMembershipId();
+        await dbRun(
+            'INSERT INTO users (membership_id, name, email, password, membership_type, profile_image_url) VALUES (?, ?, ?, ?, ?, ?)',
+            [membershipId, name, email, hashedPassword, membership_type || 'User', profile_image_url || '']
         );
 
         // Record User Action
-        await logActivity(newUserId, 'User registered account');
+        await logActivity(membershipId, 'User registered account');
 
         res.status(201).json({
             message: 'User registered successfully',
-            userId: newUserId
+            userId: membershipId
         });
 
     } catch (error) {
@@ -104,15 +117,16 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
+        const identifier = email;
 
-        if (!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required' });
+        if (!identifier || !password) {
+            return res.status(400).json({ error: 'Email or Membership ID and password are required' });
         }
 
         // Fetch user from db
-        const user = await dbGet('SELECT * FROM users WHERE email = ?', [email]);
+        const user = await dbGet('SELECT * FROM users WHERE email = ? OR membership_id = ?', [identifier, identifier]);
         if (!user) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+            return res.status(401).json({ error: 'Invalid email/ID or password' });
         }
 
         // Compare password
@@ -123,13 +137,13 @@ app.post('/api/login', async (req, res) => {
 
         // Generate JWT Token
         const token = jwt.sign(
-            { id: user.id, email: user.email, name: user.name, role: user.role },
+            { id: user.membership_id, email: user.email, name: user.name, role: user.role },
             JWT_SECRET,
             { expiresIn: '2h' }
         );
 
         // Record User Action
-        await logActivity(user.id, 'User logged in');
+        await logActivity(user.membership_id, 'User logged in');
 
         // Don't send the password back!
         delete user.password;
@@ -152,7 +166,7 @@ app.get('/api/user/dashboard', authenticateToken, async (req, res) => {
         const userId = req.user.id;
 
         // Fetch User Info
-        const user = await dbGet('SELECT id, name, email, created_at FROM users WHERE id = ?', [userId]);
+        const user = await dbGet('SELECT membership_id as id, name, email, created_at, role, membership_type, profile_image_url FROM users WHERE membership_id = ?', [userId]);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -216,13 +230,13 @@ app.get('/api/admin/users', authenticateAdmin, async (req, res) => {
             });
         };
 
-        const users = await dbAll('SELECT id, name, email, role, membership_type, profile_image_url, created_at FROM users ORDER BY created_at DESC', []);
+        const users = await dbAll('SELECT membership_id as id, name, email, role, membership_type, profile_image_url, created_at FROM users ORDER BY created_at DESC', []);
 
         // Fetch last 50 system-wide activities with user names
         const recentActivity = await dbAll(`
             SELECT a.id, a.action, a.timestamp, u.name as user_name, u.email as user_email
             FROM activity_log a
-            JOIN users u ON a.user_id = u.id
+            JOIN users u ON a.user_id = u.membership_id
             ORDER BY a.timestamp DESC 
             LIMIT 50
         `, []);
