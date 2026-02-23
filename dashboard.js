@@ -14,7 +14,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const greeting = document.getElementById('user-greeting');
     const profileName = document.getElementById('profile-name');
     const profileEmail = document.getElementById('profile-email');
+    const profileMembership = document.getElementById('profile-membership');
     const profileJoined = document.getElementById('profile-joined');
+    const profileAvatar = document.getElementById('profile-avatar');
+    const profileImgContainer = document.getElementById('profile-image-container');
+    const adminBadge = document.getElementById('admin-badge');
+    const adminPanelBtn = document.getElementById('admin-panel-btn-container');
     const activityList = document.getElementById('activity-list');
     const noActivity = document.getElementById('no-activity');
 
@@ -50,6 +55,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             profileName.textContent = user.name;
             profileEmail.textContent = user.email;
+            profileMembership.textContent = user.membership_type || 'ISRS User';
+
+            // Check if user has an avatar
+            if (user.profile_image_url) {
+                profileAvatar.src = user.profile_image_url;
+                profileImgContainer.style.display = 'block';
+            }
+
+            // Local token info check for admin UI
+            const localUserStr = localStorage.getItem('isrs_user');
+            if (localUserStr) {
+                const localUser = JSON.parse(localUserStr);
+                if (localUser.role === 'admin') {
+                    adminBadge.style.display = 'inline-block';
+                    adminPanelBtn.style.display = 'block';
+                }
+            }
 
             // Format Date
             const date = new Date(user.created_at);
