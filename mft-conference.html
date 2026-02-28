@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MFT Conference 2026 - ISRS</title>
+    <meta name="description"
+        content="Materials for Future Technologies (MFT Conference 2026) by Innovative Science Research Society.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .conf-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(64, 149, 92, 0.1) 0%, rgba(200, 222, 102, 0.1) 100%);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .conf-title {
+            font-size: 2.5rem;
+            color: var(--clr-text-main);
+            margin-bottom: 1rem;
+            font-family: var(--font-heading);
+            font-weight: 800;
+        }
+
+        .conf-subtitle {
+            font-size: 1.2rem;
+            color: var(--clr-text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .conf-dates-badge {
+            display: inline-block;
+            background: var(--clr-primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 15px rgba(64, 149, 92, 0.3);
+        }
+
+        .conf-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .theme-card {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .theme-icon {
+            font-size: 2rem;
+            color: var(--clr-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .theme-card h3 {
+            font-size: 1.3rem;
+            color: var(--clr-primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(64, 149, 92, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .theme-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .theme-card li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--clr-text-main);
+        }
+
+        .theme-card li::before {
+            content: '•';
+            color: var(--clr-primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--clr-primary);
+        }
+
+        .info-panel h3 {
+            font-size: 1.5rem;
+            color: var(--clr-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-list li:last-child {
+            border-bottom: none;
+        }
+
+        .date-label {
+            font-weight: 600;
+            color: var(--clr-text-main);
+        }
+
+        .date-value {
+            color: var(--clr-primary);
+            font-weight: 500;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .highlight-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .highlight-item i {
+            font-size: 2rem;
+            color: var(--clr-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .highlight-item p {
+            font-weight: 600;
+            color: var(--clr-text-main);
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.jpg" alt="ISRS Logo" class="brand-logo">
+                <div class="brand-text">
+                    <span class="brand-title">ISRS</span>
+                </div>
+            </a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html#home">Home</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#services">Services</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="active">Conference <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.8em; margin-left: 2px;"></i></a>
+                    <div class="dropdown-content">
+                        <a href="index.html#submission">Call for Papers</a>
+                        <a href="mft-conference.html" class="active">MFT Conference 2026</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="membership.html">Membership <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.8em; margin-left: 2px;"></i></a>
+                    <div class="dropdown-content">
+                        <a href="membership.html">ISRS Membership</a>
+                        <a href="volunteer.html">Volunteer Central</a>
+                        <a href="governance.html">Governance</a>
+                    </div>
+                </div>
+                <a href="login.html" class="btn-login"
+                    style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;"><i
+                        class="fa-solid fa-user"></i> Login</a>
+                <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conference Header -->
+    <section class="conf-header">
+        <div class="hero-bg-elements">
+            <div class="glow-orb orb-1"></div>
+        </div>
+        <div class="fade-in-up">
+            <h1 class="conf-title">Materials for Future Technologies<br>(MFT Conference 2026)</h1>
+            <p class="conf-subtitle">Promoting interdisciplinary research and collaboration focused on developing
+                next-generation materials enabling future technologies, sustainable development, and industrial
+                innovation.</p>
+            <div class="conf-dates-badge">
+                <i class="fa-regular fa-calendar" style="margin-right: 8px;"></i> 17–19 December 2026
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <section class="conf-section bg-light">
+            <div class="fade-in-up">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h2 class="section-title">Conference Themes & Tracks 🎯</h2>
+                </div>
+
+                <div class="theme-grid">
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fa-solid fa-flask"></i></div>
+                        <h3>Advanced & Functional Materials</h3>
+                        <ul>
+                            <li>Nanomaterials and Nanotechnology</li>
+                            <li>Smart and Functional Materials</li>
+                            <li>Biomaterials and Healthcare Materials</li>
+                            <li>Polymer Science and Engineering</li>
+                            <li>Composite and Hybrid Materials</li>
+                        </ul>
+                    </div>
+
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <h3>Materials for Energy & Electronics</h3>
+                        <ul>
+                            <li>Energy Storage Materials (Batteries & Supercapacitors)</li>
+                            <li>Renewable Energy Materials</li>
+                            <li>Semiconductor and Electronic Materials</li>
+                            <li>Photonic and Optoelectronic Materials</li>
+                        </ul>
+                    </div>
+
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fa-solid fa-industry"></i></div>
+                        <h3>Manufacturing & Industrial Materials</h3>
+                        <ul>
+                            <li>Additive Manufacturing Materials</li>
+                            <li>Advanced Processing Techniques</li>
+                            <li>Surface Engineering and Coatings</li>
+                            <li>Aerospace and Automotive Materials</li>
+                        </ul>
+                    </div>
+
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fa-solid fa-leaf"></i></div>
+                        <h3>Sustainable & Green Materials</h3>
+                        <ul>
+                            <li>Sustainable and Eco-friendly Materials</li>
+                            <li>Recycling and Circular Economy</li>
+                            <li>Green Manufacturing Technologies</li>
+                            <li>Environmental Materials Engineering</li>
+                        </ul>
+                    </div>
+
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fa-solid fa-robot"></i></div>
+                        <h3>Emerging Materials for Future Tech</h3>
+                        <ul>
+                            <li>AI-driven Materials Discovery</li>
+                            <li>Quantum & 2D Materials</li>
+                            <li>Flexible and Wearable Electronics</li>
+                            <li>Materials for Smart Infrastructure & Mobility</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="conf-section">
+            <div class="fade-in-up">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+
+                    <!-- Submission Guidelines -->
+                    <div class="info-panel">
+                        <h3><i class="fa-solid fa-file-contract"></i> Paper Submission Guidelines 📄</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                                <i class="fa-solid fa-check"
+                                    style="color: var(--clr-primary); position: absolute; left: 0; top: 3px;"></i>
+                                Original, unpublished research papers are invited.
+                            </li>
+                            <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                                <i class="fa-solid fa-check"
+                                    style="color: var(--clr-primary); position: absolute; left: 0; top: 3px;"></i>
+                                All submissions will undergo double-blind peer review.
+                            </li>
+                            <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                                <i class="fa-solid fa-check"
+                                    style="color: var(--clr-primary); position: absolute; left: 0; top: 3px;"></i>
+                                Accepted papers will be included in conference proceedings.
+                            </li>
+                            <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                                <i class="fa-solid fa-check"
+                                    style="color: var(--clr-primary); position: absolute; left: 0; top: 3px;"></i>
+                                Selected papers may be recommended for indexed journals (Scopus/WoS – under process).
+                            </li>
+                        </ul>
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <a href="#" class="btn btn-primary">Submit Paper <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Important Dates -->
+                    <div class="info-panel">
+                        <h3><i class="fa-regular fa-calendar-check"></i> Important Dates 🗓</h3>
+                        <ul class="timeline-list">
+                            <li>
+                                <span class="date-label">Paper Submission Deadline:</span>
+                                <span class="date-value">15 September 2026</span>
+                            </li>
+                            <li>
+                                <span class="date-label">Notification of Acceptance:</span>
+                                <span class="date-value">20 October 2026</span>
+                            </li>
+                            <li>
+                                <span class="date-label">Camera-Ready Paper:</span>
+                                <span class="date-value">15 November 2026</span>
+                            </li>
+                            <li>
+                                <span class="date-label">Early Registration:</span>
+                                <span class="date-value">25 November 2026</span>
+                            </li>
+                            <li
+                                style="background: rgba(64, 149, 92, 0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                <span class="date-label" style="color: var(--clr-primary);">Main Conference:</span>
+                                <span class="date-value" style="font-weight: bold; color: var(--clr-text-main);">17–19
+                                    December 2026</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="conf-section bg-light">
+            <div class="fade-in-up">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h2 class="section-title">Who Should Participate? 👨‍🔬</h2>
+                </div>
+
+                <div class="highlights-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                    <div class="highlight-item">
+                        <i class="fa-solid fa-microscope"></i>
+                        <p>Researchers & Scientists</p>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <p>Faculty Members</p>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fa-solid fa-building"></i>
+                        <p>Industry Experts</p>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <p>PhD / PG Students</p>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fa-solid fa-rocket"></i>
+                        <p>R&D Organizations & Startups</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 4rem; text-align: center;">
+                    <h2 class="section-title">Conference Highlights 🌍</h2>
+                    <div class="highlights-grid" style="margin-top: 2rem;">
+                        <div class="highlight-item"
+                            style="background: white; box-shadow: var(--shadow-sm); border: none;">
+                            <i class="fa-solid fa-users" style="color: var(--clr-primary);"></i>
+                            <p>Distinguished International Keynote Speakers</p>
+                        </div>
+                        <div class="highlight-item"
+                            style="background: white; box-shadow: var(--shadow-sm); border: none;">
+                            <i class="fa-solid fa-person-chalkboard" style="color: var(--clr-primary);"></i>
+                            <p>Technical & Poster Sessions</p>
+                        </div>
+                        <div class="highlight-item"
+                            style="background: white; box-shadow: var(--shadow-sm); border: none;">
+                            <i class="fa-solid fa-handshake" style="color: var(--clr-primary);"></i>
+                            <p>Industry Interaction Forum</p>
+                        </div>
+                        <div class="highlight-item"
+                            style="background: white; box-shadow: var(--shadow-sm); border: none;">
+                            <i class="fa-solid fa-award" style="color: var(--clr-primary);"></i>
+                            <p>Awards (Best Paper, Best Presentation, Young Researcher)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo-container">
+                        <img src="assets/logo.jpg" alt="ISRS Logo" class="footer-logo">
+                        <h3>ISRS</h3>
+                    </div>
+                    <p class="footer-desc">Innovative Science Research Society</p>
+                    <p class="footer-reg">Regd. No. 758/2013<br>(Under H.P. Societies Registration Act, 2006)</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="mft-conference.html">MFT Conference 2026</a></li>
+                        <li><a href="index.html#submission">Call for Papers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fa-solid fa-location-dot"></i> 506 Keystone Drive, Warrendale, PA 15086-7537</p>
+                    <p><i class="fa-solid fa-phone"></i> Phone: 724.779.3003</p>
+                    <p><i class="fa-solid fa-envelope"></i> Email: info@isrs.org</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Innovative Science Research Society. All Rights Reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+</body>
+
+</html>
